@@ -1,18 +1,21 @@
 import sys
-
+from settings import Settings
+from ship import Ship
+import game_functions
 import pygame
 def run_game():
+    settings = Settings()
     pygame.init()
     pygame.display.init()
-    screen = pygame.display.set_mode((1200, 800))
-    pygame.display.set_caption("Alien Invasion")
-    screen.fill((230, 230, 230))
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit("Exiting Game!")
+    screen = pygame.display.set_mode((settings.screen_width, settings.screen_height))
+    ship = Ship(screen)
 
-        pygame.display.flip()
+    pygame.display.set_caption("Alien Invasion")
+
+    while True:
+        game_functions.check_events(ship)
+        ship.update()
+        game_functions.update_screen(ship, screen, settings)
 
 
 run_game()
